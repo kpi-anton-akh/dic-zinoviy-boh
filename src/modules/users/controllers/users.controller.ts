@@ -44,7 +44,7 @@ export class UsersController {
     return this.usersService.update(id, user);
   }
 
-  @ApiResponse({ status: 200, type: '1' })
+  @ApiResponse({ status: 200 })
   @Delete(':id')
   async remove(@Param('id') id: number): Promise<void> {
     return this.usersService.remove(id);
