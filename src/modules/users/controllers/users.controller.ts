@@ -10,6 +10,7 @@ import {
 import { UsersService } from '../services/users.service';
 import { UserEntity } from '../entities/users.entity';
 import { ApiResponse, ApiTags } from '@nestjs/swagger/dist';
+import { CreateUserDto, UpdateUserDto } from '../dtos';
 
 @ApiTags('Users')
 @Controller('users')
@@ -30,7 +31,7 @@ export class UsersController {
 
   @ApiResponse({ status: 201, type: UserEntity })
   @Post()
-  async create(@Body() user: UserEntity): Promise<UserEntity> {
+  async create(@Body() user: CreateUserDto): Promise<UserEntity> {
     return this.usersService.create(user);
   }
 
@@ -38,7 +39,7 @@ export class UsersController {
   @Put(':id')
   async update(
     @Param('id') id: number,
-    @Body() user: UserEntity,
+    @Body() user: UpdateUserDto,
   ): Promise<UserEntity> {
     return this.usersService.update(id, user);
   }

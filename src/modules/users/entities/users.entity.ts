@@ -3,19 +3,19 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UserEntity {
-  @ApiProperty({ example: 1 })
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty({ example: 'Bogdan' })
+  @ApiProperty()
   @Column()
   name: string;
 
-  @ApiProperty({ example: 'bogdan-baraban@ukr.net' })
+  @ApiProperty()
   @Column()
   email: string;
 
-  @ApiProperty({ example: '12345678' })
+  @ApiProperty()
   @Column()
   password: string;
 }
