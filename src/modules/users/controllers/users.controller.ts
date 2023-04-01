@@ -19,14 +19,14 @@ export class UsersController {
 
   @ApiResponse({ status: 200, type: [UserEntity] })
   @Get()
-  async findAll(): Promise<UserEntity[]> {
-    return this.usersService.findAll();
+  async getAll(): Promise<UserEntity[]> {
+    return this.usersService.getAll();
   }
 
   @ApiResponse({ status: 200, type: UserEntity })
   @Get(':id')
-  async findOne(@Param('id') id: number): Promise<UserEntity> {
-    return this.usersService.findOne(id);
+  async get(@Param('id') id: number): Promise<UserEntity> {
+    return this.usersService.get(id);
   }
 
   @ApiResponse({ status: 201, type: UserEntity })
@@ -46,7 +46,7 @@ export class UsersController {
 
   @ApiResponse({ status: 200 })
   @Delete(':id')
-  async remove(@Param('id') id: number): Promise<void> {
-    return this.usersService.remove(id);
+  async delete(@Param('id') id: number): Promise<void> {
+    return this.usersService.delete(id);
   }
 }
