@@ -36,4 +36,9 @@ export class UsersRepository {
   async delete(id: number): Promise<void> {
     await this.usersRepository.delete(id);
   }
+
+  async getByEmail(email: string): Promise<UserEntity> {
+    const user = await this.usersRepository.findOneBy({ email });
+    return user;
+  }
 }
