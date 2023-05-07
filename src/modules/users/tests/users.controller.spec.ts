@@ -1,9 +1,9 @@
 import { Test } from '@nestjs/testing';
 import { ConflictException } from '@nestjs/common';
-import { UsersController } from '../controllers/users.controller';
+import { UsersController } from '../users.controller';
 import { CreateUserDto, UpdateUserDto } from '../dtos';
-import { UserEntity } from '../entities/users.entity';
-import { UsersService } from '../services/users.service';
+import { UserEntity } from '../users.entity';
+import { UsersService } from '../users.service';
 
 describe('UsersController', () => {
   let usersController: UsersController;

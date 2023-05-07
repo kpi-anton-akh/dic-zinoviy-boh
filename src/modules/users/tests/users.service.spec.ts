@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConflictException } from '@nestjs/common';
-import { UsersService } from '../services/users.service';
-import { UsersRepository } from '../repositories/users.repository';
-import { UserEntity } from '../entities/users.entity';
+import { UsersService } from '../users.service';
+import { UsersRepository } from '../users.repository';
+import { UserEntity } from '../users.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos';
 
 describe('UsersService', () => {

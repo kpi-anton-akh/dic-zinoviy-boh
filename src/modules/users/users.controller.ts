@@ -7,10 +7,10 @@ import {
   Param,
   Body,
 } from '@nestjs/common';
-import { UsersService } from '../services/users.service';
-import { UserEntity } from '../entities/users.entity';
+import { UsersService } from './users.service';
+import { UserEntity } from './users.entity';
 import { ApiResponse, ApiTags } from '@nestjs/swagger/dist';
-import { CreateUserDto, UpdateUserDto } from '../dtos';
+import { CreateUserDto, UpdateUserDto } from './dtos';
 
 @ApiTags('Users')
 @Controller('users')
