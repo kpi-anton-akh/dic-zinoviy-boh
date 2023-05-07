@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserDto, UpdateUserDto } from './dtos/index';
 import { UserEntity } from './users.entity';
 import { Repository } from 'typeorm';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class UsersRepository {
@@ -12,24 +12,35 @@ export class UsersRepository {
   ) {}
 
   async get(id: number): Promise<UserEntity> {
-    const user = await this.usersRepository.findOneBy({ id });
+    const userFromDB = await this.usersRepository.findOneBy({ id });
+    const user = plainToClass(UserEntity, userFromDB);
+
     return user;
   }
 
   async getAll(): Promise<UserEntity[]> {
-    const users = await this.usersRepository.find();
+    const usersFromDB = await this.usersRepository.find();
+    const users = usersFromDB.map((user) => plainToClass(UserEntity, user));
+
     return users;
   }
 
-  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
-    const user = this.usersRepository.create(createUserDto);
-    const savedUser = await this.usersRepository.save(user);
-    return savedUser;
+  async create(userToCreate: Partial<UserEntity>): Promise<UserEntity> {
+    const userFromDB = this.usersRepository.create(userToCreate);
+    const savedUser = await this.usersRepository.save(userFromDB);
+    const createdUser = plainToClass(UserEntity, savedUser);
+
+    return createdUser;
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<UserEntity> {
-    await this.usersRepository.update(id, updateUserDto);
-    const updatedUser = await this.usersRepository.findOneBy({ id });
+  async update(
+    id: number,
+    userToUpdate: Partial<UserEntity>,
+  ): Promise<UserEntity> {
+    await this.usersRepository.update(id, userToUpdate);
+    const userFromDB = await this.usersRepository.findOneBy({ id });
+    const updatedUser = plainToClass(UserEntity, userFromDB);
+
     return updatedUser;
   }
 
@@ -38,7 +49,9 @@ export class UsersRepository {
   }
 
   async getByEmail(email: string): Promise<UserEntity> {
-    const user = await this.usersRepository.findOneBy({ email });
+    const userFromDB = await this.usersRepository.findOneBy({ email });
+    const user = plainToClass(UserEntity, userFromDB);
+
     return user;
   }
 }

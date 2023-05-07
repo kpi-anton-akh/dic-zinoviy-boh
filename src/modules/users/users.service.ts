@@ -1,7 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { UserEntity } from './users.entity';
 import { UsersRepository } from './users.repository';
-import { CreateUserDto, UpdateUserDto } from './dtos';
 
 @Injectable()
 export class UsersService {
@@ -15,7 +14,7 @@ export class UsersService {
     return this.usersRepository.get(id);
   }
 
-  async create(user: CreateUserDto): Promise<UserEntity> {
+  async create(user: Partial<UserEntity>): Promise<UserEntity> {
     const userInDB = await this.usersRepository.getByEmail(user.email);
 
     if (userInDB)
@@ -26,7 +25,7 @@ export class UsersService {
     return this.usersRepository.create(user);
   }
 
-  async update(id: number, user: UpdateUserDto): Promise<UserEntity> {
+  async update(id: number, user: Partial<UserEntity>): Promise<UserEntity> {
     return this.usersRepository.update(id, user);
   }
 

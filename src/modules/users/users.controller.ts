@@ -7,6 +7,7 @@ import {
   Param,
   Body,
 } from '@nestjs/common';
+import { plainToClass } from 'class-transformer';
 import { UsersService } from './users.service';
 import { UserEntity } from './users.entity';
 import { ApiResponse, ApiTags } from '@nestjs/swagger/dist';
@@ -32,7 +33,9 @@ export class UsersController {
   @ApiResponse({ status: 201, type: UserEntity })
   @Post()
   async create(@Body() user: CreateUserDto): Promise<UserEntity> {
-    return this.usersService.create(user);
+    const userToCreate = plainToClass(UserEntity, user);
+
+    return this.usersService.create(userToCreate);
   }
 
   @ApiResponse({ status: 200, type: UserEntity })
@@ -41,7 +44,9 @@ export class UsersController {
     @Param('id') id: number,
     @Body() user: UpdateUserDto,
   ): Promise<UserEntity> {
-    return this.usersService.update(id, user);
+    const userToUpdate = plainToClass(UserEntity, user);
+
+    return this.usersService.update(id, userToUpdate);
   }
 
   @ApiResponse({ status: 200 })
