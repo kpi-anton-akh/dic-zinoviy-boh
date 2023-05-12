@@ -11,8 +11,6 @@ export class NotesService {
   }
 
   async get(id: string): Promise<Note> {
-    const note = await this.notesRepository.get(id);
-    console.log(typeof note.id);
     return this.notesRepository.get(id);
   }
 
