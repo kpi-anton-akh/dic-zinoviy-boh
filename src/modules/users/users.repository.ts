@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IUsersRepository } from './interfaces/index';
-import { UserEntity } from './users.entity';
+import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class UsersRepository implements IUsersRepository {
   constructor(
-    @InjectRepository(UserEntity)
+    @InjectRepository(UserEntity, 'postgres-db')
     private usersRepository: Repository<UserEntity>,
   ) {}
 

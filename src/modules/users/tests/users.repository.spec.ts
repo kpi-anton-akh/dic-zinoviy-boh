@@ -2,7 +2,7 @@ import { TestingModule, Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UsersRepository } from '../users.repository';
-import { UserEntity } from '../users.entity';
+import { UserEntity } from '../user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos';
 
 describe('UsersRepository', () => {
@@ -14,7 +14,7 @@ describe('UsersRepository', () => {
       providers: [
         UsersRepository,
         {
-          provide: getRepositoryToken(UserEntity),
+          provide: getRepositoryToken(UserEntity, 'postgres-db'),
           useValue: {
             get: jest.fn(),
             find: jest.fn(),
@@ -30,7 +30,7 @@ describe('UsersRepository', () => {
 
     usersRepository = module.get<UsersRepository>(UsersRepository);
     userRepository = module.get<Repository<UserEntity>>(
-      getRepositoryToken(UserEntity),
+      getRepositoryToken(UserEntity, 'postgres-db'),
     );
   });
 

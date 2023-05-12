@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { UsersService } from './users.service';
-import { UserEntity } from './users.entity';
+import { UserEntity } from './user.entity';
 import { ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 import { CreateUserDto, UpdateUserDto } from './dtos';
 

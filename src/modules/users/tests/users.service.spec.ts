@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConflictException } from '@nestjs/common';
 import { UsersService } from '../users.service';
 import { UsersRepository } from '../users.repository';
-import { UserEntity } from '../users.entity';
+import { UserEntity } from '../user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos';
 
 describe('UsersService', () => {

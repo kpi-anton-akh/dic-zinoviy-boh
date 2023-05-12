@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { UserEntity } from '../modules/users/users.entity';
+import { UserEntity } from '../modules/users/user.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
+      name: 'postgres-db',
       useFactory: (configService: ConfigService) => ({
         type: configService.get<'postgres'>('TYPEORM_TYPE'),
         host: configService.get('TYPEORM_HOST'),
@@ -19,8 +20,8 @@ import { UserEntity } from '../modules/users/users.entity';
       imports: [ConfigModule],
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([UserEntity]),
+    TypeOrmModule.forFeature([UserEntity], 'postgres-db'),
   ],
   exports: [TypeOrmModule],
 })
-export class DatabaseModule {}
+export class PostgresDatabaseModule {}

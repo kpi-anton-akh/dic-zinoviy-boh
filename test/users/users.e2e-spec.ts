@@ -7,7 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from 'src/modules/users/users.module';
-import { UserEntity } from 'src/modules/users/users.entity';
+import { UserEntity } from 'src/modules/users/user.entity';
 import { CreateUserDto, UpdateUserDto } from 'src/modules/users/dtos/index';
 
 describe('Users', () => {
@@ -20,6 +20,7 @@ describe('Users', () => {
       imports: [
         ConfigModule.forRoot({ isGlobal: true }),
         TypeOrmModule.forRootAsync({
+          name: 'postgres-db',
           imports: [SharedModule],
           inject: [ApiConfigService],
           useFactory: ({ sqliteConfig }) => sqliteConfig,
@@ -68,7 +69,7 @@ describe('Users', () => {
   afterAll(async () => {
     await dataSource.dropDatabase();
     await dataSource.destroy();
-    await app.close();
+    // await app.close();
   });
 
   it('should create a user', async () => {

@@ -1,5 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { UserEntity } from './users.entity';
+import { UserEntity } from './user.entity';
 import { UsersRepository } from './users.repository';
 
 @Injectable()

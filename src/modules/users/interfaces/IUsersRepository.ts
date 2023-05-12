@@ -1,4 +1,4 @@
-import { UserEntity } from '../users.entity';
+import { UserEntity } from '../user.entity';
 
 export interface IUsersRepository {
   getAll(): Promise<UserEntity[]>;
