@@ -114,7 +114,7 @@ describe('NotessController', () => {
     it('should update an existing note', async () => {
       const mockId = '615c6a81cbedb8c1a147c3ae';
 
-      const noteToUpdate: Partial<Note> = {
+      const noteToUpdate: UpdateNoteDto = {
         title: 'Updated Test Note',
       };
 
