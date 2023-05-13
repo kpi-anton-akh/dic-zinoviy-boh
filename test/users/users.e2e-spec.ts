@@ -23,7 +23,11 @@ describe('Users', () => {
           name: 'postgres-db',
           imports: [SharedModule],
           inject: [ApiConfigService],
-          useFactory: ({ sqliteConfig }) => sqliteConfig,
+          useFactory: (configService: ApiConfigService) => ({
+            ...configService.sqliteConfig,
+            name: 'postgres-db',
+            entities: [UserEntity],
+          }),
           dataSourceFactory: async (options) => {
             dataSource = await new DataSource(options).initialize();
             return dataSource;
@@ -69,7 +73,7 @@ describe('Users', () => {
   afterAll(async () => {
     await dataSource.dropDatabase();
     await dataSource.destroy();
-    // await app.close();
+    await app.close();
   });
 
   it('should create a user', async () => {
