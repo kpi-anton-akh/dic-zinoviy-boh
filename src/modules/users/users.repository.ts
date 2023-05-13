@@ -4,11 +4,12 @@ import { IUsersRepository } from './interfaces/index';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { plainToClass } from 'class-transformer';
+import { POSTGRES_CONNECTION_NAME } from '../../shared/constants/index';
 
 @Injectable()
 export class UsersRepository implements IUsersRepository {
   constructor(
-    @InjectRepository(User, 'postgres-db')
+    @InjectRepository(User, POSTGRES_CONNECTION_NAME)
     private usersRepository: Repository<User>,
   ) {}
 

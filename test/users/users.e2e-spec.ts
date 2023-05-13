@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from 'src/modules/users/users.module';
 import { User } from 'src/modules/users/user.entity';
 import { CreateUserDto, UpdateUserDto } from 'src/modules/users/dtos/index';
+import { POSTGRES_CONNECTION_NAME } from '../../src/shared/constants/index';
 
 describe('Users', () => {
   let app: INestApplication;
@@ -20,12 +21,12 @@ describe('Users', () => {
       imports: [
         ConfigModule.forRoot({ isGlobal: true }),
         TypeOrmModule.forRootAsync({
-          name: 'postgres-db',
+          name: POSTGRES_CONNECTION_NAME,
           imports: [SharedModule],
           inject: [ApiConfigService],
           useFactory: (configService: ApiConfigService) => ({
             ...configService.sqliteConfig,
-            name: 'postgres-db',
+            name: POSTGRES_CONNECTION_NAME,
             entities: [User],
           }),
           dataSourceFactory: async (options) => {

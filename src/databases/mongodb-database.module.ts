@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Note } from '../modules/notes/note.entity';
+import { MONGO_CONNECTION_NAME } from '../shared/constants/index';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      name: 'mongo-db',
+      name: MONGO_CONNECTION_NAME,
       useFactory: (configService: ConfigService) => ({
         type: 'mongodb',
         host: configService.get('MONGODB_HOST'),
@@ -24,7 +25,7 @@ import { Note } from '../modules/notes/note.entity';
       imports: [ConfigModule],
     }),
 
-    TypeOrmModule.forFeature([Note], 'mongo-db'),
+    TypeOrmModule.forFeature([Note], MONGO_CONNECTION_NAME),
   ],
   exports: [TypeOrmModule],
 })

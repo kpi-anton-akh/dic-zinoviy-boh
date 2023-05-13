@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { NotesRepository } from '../notes.repository';
 import { Note } from '../note.entity';
 import { ObjectID } from 'mongodb';
+import { MONGO_CONNECTION_NAME } from '../../../shared/constants/index';
 
 describe('NotesRepository', () => {
   let notesRepository: NotesRepository;
@@ -14,7 +15,7 @@ describe('NotesRepository', () => {
       providers: [
         NotesRepository,
         {
-          provide: getRepositoryToken(Note, 'mongo-db'),
+          provide: getRepositoryToken(Note, MONGO_CONNECTION_NAME),
           useValue: {
             get: jest.fn(),
             find: jest.fn(),
@@ -30,7 +31,7 @@ describe('NotesRepository', () => {
 
     notesRepository = module.get<NotesRepository>(NotesRepository);
     noteRepository = module.get<Repository<Note>>(
-      getRepositoryToken(Note, 'mongo-db'),
+      getRepositoryToken(Note, MONGO_CONNECTION_NAME),
     );
   });
 

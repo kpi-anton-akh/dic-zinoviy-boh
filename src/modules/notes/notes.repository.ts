@@ -5,11 +5,12 @@ import { Note } from './note.entity';
 import { Repository } from 'typeorm';
 import { plainToClass } from 'class-transformer';
 import { ObjectID } from 'mongodb';
+import { MONGO_CONNECTION_NAME } from '../../shared/constants/index';
 
 @Injectable()
 export class NotesRepository implements INotesRepository {
   constructor(
-    @InjectRepository(Note, 'mongo-db')
+    @InjectRepository(Note, MONGO_CONNECTION_NAME)
     private notesRepository: Repository<Note>,
   ) {}
 

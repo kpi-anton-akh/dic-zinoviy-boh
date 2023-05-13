@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { UsersRepository } from '../users.repository';
 import { User } from '../user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos';
+import { POSTGRES_CONNECTION_NAME } from '../../../shared/constants/index';
 
 describe('UsersRepository', () => {
   let usersRepository: UsersRepository;
@@ -14,7 +15,7 @@ describe('UsersRepository', () => {
       providers: [
         UsersRepository,
         {
-          provide: getRepositoryToken(User, 'postgres-db'),
+          provide: getRepositoryToken(User, POSTGRES_CONNECTION_NAME),
           useValue: {
             get: jest.fn(),
             find: jest.fn(),
@@ -30,7 +31,7 @@ describe('UsersRepository', () => {
 
     usersRepository = module.get<UsersRepository>(UsersRepository);
     userRepository = module.get<Repository<User>>(
-      getRepositoryToken(User, 'postgres-db'),
+      getRepositoryToken(User, POSTGRES_CONNECTION_NAME),
     );
   });
 

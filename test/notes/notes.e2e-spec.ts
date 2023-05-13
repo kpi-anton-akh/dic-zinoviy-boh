@@ -42,13 +42,10 @@ class NotesRepositoryMock implements INotesRepository {
   }
 
   async delete(id: string): Promise<void> {
-    console.log(this.notes);
     const noteIndex = this.notes.findIndex((note) => note.id === id);
     if (noteIndex !== -1) {
       this.notes.splice(noteIndex, 1);
     }
-    console.log(noteIndex);
-    console.log(this.notes);
   }
 
   async getByTitle(title: string): Promise<Note> {
