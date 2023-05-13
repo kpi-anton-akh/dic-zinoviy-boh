@@ -7,13 +7,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from 'src/modules/users/users.module';
-import { UserEntity } from 'src/modules/users/user.entity';
+import { User } from 'src/modules/users/user.entity';
 import { CreateUserDto, UpdateUserDto } from 'src/modules/users/dtos/index';
 
 describe('Users', () => {
   let app: INestApplication;
   let dataSource: DataSource;
-  let db: Repository<UserEntity>;
+  let db: Repository<User>;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -26,7 +26,7 @@ describe('Users', () => {
           useFactory: (configService: ApiConfigService) => ({
             ...configService.sqliteConfig,
             name: 'postgres-db',
-            entities: [UserEntity],
+            entities: [User],
           }),
           dataSourceFactory: async (options) => {
             dataSource = await new DataSource(options).initialize();
@@ -38,7 +38,7 @@ describe('Users', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    db = dataSource.getRepository(UserEntity);
+    db = dataSource.getRepository(User);
 
     await app.init();
   });
