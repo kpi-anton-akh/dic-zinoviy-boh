@@ -11,10 +11,10 @@ export class Note {
   id: string;
 
   @ApiProperty()
-  @Column({ nullable: false })
+  @Column({ nullable: false, length: 32 })
   title: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: false, length: 512 })
   description: string;
 }
