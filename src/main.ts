@@ -9,12 +9,16 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
 
+  const PREFIX = configService.get('NEST_PREFIX');
+  app.setGlobalPrefix(PREFIX);
+
   const HOST = configService.get('NEST_HOST');
   const PORT = configService.get('NEST_PORT');
 
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
+    .setVersion(configService.get('npm_package_version'))
     .setTitle('Users service CRUD')
     .setDescription('REST-api documentation')
     .build();
