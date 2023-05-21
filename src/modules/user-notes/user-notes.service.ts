@@ -3,9 +3,10 @@ import { UsersService } from '../users/users.service';
 import { NotesService } from '../notes/notes.service';
 import { UserNotesStorage } from './user-note.storage';
 import { UserNote } from './user-note.entity';
+import { IUserNotesService } from './interfaces/IUserNotesService';
 
 @Injectable()
-export class UserNotesService {
+export class UserNotesService implements IUserNotesService {
   constructor(
     private readonly usersService: UsersService,
     private readonly notesService: NotesService,
@@ -21,12 +22,18 @@ export class UserNotesService {
 
   async createUserNote(userId: number, noteId: string): Promise<UserNote> {
     const user = await this.usersService.get(userId);
+    if (!user) {
+      throw new ConflictException('User with given id does not exists!');
+    }
+
     const note = await this.notesService.get(noteId);
+    if (!note) {
+      throw new ConflictException('Note with given id does not exists!');
+    }
 
     const isNoteAssigned = await this.userNotesStorage.containsFileWithNoteId(
       noteId,
     );
-
     if (isNoteAssigned) {
       throw new ConflictException(
         'This Note is already assigned to some user!',
