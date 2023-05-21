@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConflictException, NotFoundException } from '@nestjs/common';
+import { ConflictException } from '@nestjs/common';
 import { UserNotesService } from '../user-notes.service';
 import { UserNotesStorage } from '../user-note.storage';
 import { Note } from 'src/modules/notes/note.entity';
