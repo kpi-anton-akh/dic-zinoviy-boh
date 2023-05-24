@@ -1,7 +1,7 @@
 import { Injectable, ConflictException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { NotesService } from '../notes/notes.service';
-import { UserNotesStorage } from './user-note.storage';
+import { BlobStorage } from '../../shared/blob-storage/blob-storage.storage';
 import { UserNote } from './user-note.entity';
 import { IUserNotesService } from './interfaces/IUserNotesService';
 
@@ -10,7 +10,7 @@ export class UserNotesService implements IUserNotesService {
   constructor(
     private readonly usersService: UsersService,
     private readonly notesService: NotesService,
-    private readonly userNotesStorage: UserNotesStorage,
+    private readonly userNotesStorage: BlobStorage,
   ) {}
 
   async getNotes(userId: number): Promise<string[]> {
