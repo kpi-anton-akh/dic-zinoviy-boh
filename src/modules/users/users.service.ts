@@ -1,10 +1,14 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { UsersRepository } from './users.repository';
+import { UserStatsPublisher } from 'src/shared/service-bus/UserStatsPublisher';
 
 @Injectable()
 export class UsersService {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private readonly userStatsPublisher: UserStatsPublisher,
+  ) {}
 
   async getAll(): Promise<User[]> {
     return this.usersRepository.getAll();
@@ -22,7 +26,11 @@ export class UsersService {
         `User with the email "${user.email}" already exists!`,
       );
 
-    return this.usersRepository.create(user);
+    const createdUser = await this.usersRepository.create(user);
+
+    await this.userStatsPublisher.publish({ body: createdUser.id.toString() });
+
+    return createdUser;
   }
 
   async update(id: number, user: Partial<User>): Promise<User> {
