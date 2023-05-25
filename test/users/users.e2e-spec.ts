@@ -114,6 +114,7 @@ describe('Users', () => {
     expect(createdUser).toMatchObject(newUser);
     expect(createdUser.id).toBe(4);
     expect(usersAfterCreate.length).toBe(4);
+    expect(userStatsPublisher.publish).toHaveBeenCalledWith(createdUser.id);
   });
 
   it('should get all users', async () => {

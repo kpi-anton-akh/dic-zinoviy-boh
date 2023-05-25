@@ -69,6 +69,7 @@ describe('UsersService', () => {
       );
       expect(usersRepository.create).toHaveBeenCalledWith(userToCreate);
       expect(actual).toEqual(mockUser);
+      expect(userStatsPublisher.publish).toHaveBeenCalledWith(mockUser.id);
     });
 
     it('should throw an error if a user with the same email already exists', async () => {
