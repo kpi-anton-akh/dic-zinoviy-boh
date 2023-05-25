@@ -1,8 +1,4 @@
-import {
-  ServiceBusClient,
-  ServiceBusSender,
-  ServiceBusMessage,
-} from '@azure/service-bus';
+import { ServiceBusClient, ServiceBusSender } from '@azure/service-bus';
 import { Injectable, Inject } from '@nestjs/common';
 import { IPublisher } from './IPublisher';
 

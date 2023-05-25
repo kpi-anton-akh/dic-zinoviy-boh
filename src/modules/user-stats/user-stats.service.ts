@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { UserStatsSubscriber } from 'src/shared/service-bus/UserStatsSubscriber';
+import { UserStatsSubscriber } from '../../shared/service-bus/UserStatsSubscriber';
 
 @Injectable()
 export class UserStatsService {
