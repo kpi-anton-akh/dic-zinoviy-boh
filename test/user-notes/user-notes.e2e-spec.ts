@@ -1,18 +1,18 @@
 import * as request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { IUserNotesStorage } from 'src/modules/user-notes/interfaces/IUserNotesStorage';
+import { IBlobStorage } from 'src/shared/blob-storage/interfaces/IBlobStorage';
 import { UsersService } from 'src/modules/users/users.service';
 import { NotesService } from 'src/modules/notes/notes.service';
 import { UserNotesService } from 'src/modules/user-notes/user-notes.service';
-import { UserNotesStorage } from 'src/modules/user-notes/user-note.storage';
+import { BlobStorage } from 'src/shared/blob-storage/blob-storage.storage';
 import { UserNotesController } from 'src/modules/user-notes/user-notes.controller';
 import { Note } from 'src/modules/notes/note.entity';
 import { User } from 'src/modules/users/user.entity';
 
 describe('UserNotes', () => {
   let app: INestApplication;
-  let storage: UserNotesStorage;
+  let storage: BlobStorage;
   let usersService: UsersService;
   let notesService: NotesService;
 
@@ -20,7 +20,7 @@ describe('UserNotes', () => {
   let mockNote: Note;
   let mockUserNotes: string[];
 
-  const mockUserNotesStorage: jest.Mocked<IUserNotesStorage> = {
+  const mockUserNotesStorage: jest.Mocked<IBlobStorage> = {
     putFile: jest.fn(),
     containsFileWithNoteId: jest.fn(),
     findByUser: jest.fn(),
@@ -38,7 +38,7 @@ describe('UserNotes', () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       providers: [
         UserNotesService,
-        { provide: UserNotesStorage, useValue: mockUserNotesStorage },
+        { provide: BlobStorage, useValue: mockUserNotesStorage },
         { provide: NotesService, useValue: mockNotesService },
         { provide: UsersService, useValue: mockUsersService },
       ],
@@ -46,7 +46,7 @@ describe('UserNotes', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    storage = moduleFixture.get<UserNotesStorage>(UserNotesStorage);
+    storage = moduleFixture.get<BlobStorage>(BlobStorage);
     usersService = moduleFixture.get<UsersService>(UsersService);
     notesService = moduleFixture.get<NotesService>(NotesService);
 

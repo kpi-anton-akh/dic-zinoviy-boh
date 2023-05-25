@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConflictException } from '@nestjs/common';
 import { UserNotesService } from '../user-notes.service';
-import { UserNotesStorage } from '../user-note.storage';
+import { BlobStorage } from '../../../shared/blob-storage/blob-storage.storage';
 import { Note } from 'src/modules/notes/note.entity';
 import { User } from 'src/modules/users/user.entity';
 import { NotesService } from '../../notes/notes.service';
 import { UsersService } from '../../users/users.service';
 
 describe('UserNotesService', () => {
-  let storage: UserNotesStorage;
+  let storage: BlobStorage;
   let usersService: UsersService;
   let notesService: NotesService;
   let userNotesService: UserNotesService;
@@ -17,7 +17,7 @@ describe('UserNotesService', () => {
   let mockNote: Note;
   let mockUserNotes: string[];
 
-  const mockUserNotesStorage: jest.Mocked<Partial<UserNotesStorage>> = {
+  const mockUserNotesStorage: jest.Mocked<Partial<BlobStorage>> = {
     putFile: jest.fn(),
     containsFileWithNoteId: jest.fn(),
     findByUser: jest.fn(),
@@ -35,14 +35,14 @@ describe('UserNotesService', () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       providers: [
         UserNotesService,
-        { provide: UserNotesStorage, useValue: mockUserNotesStorage },
+        { provide: BlobStorage, useValue: mockUserNotesStorage },
         { provide: NotesService, useValue: mockNotesService },
         { provide: UsersService, useValue: mockUsersService },
       ],
     }).compile();
 
     userNotesService = moduleFixture.get<UserNotesService>(UserNotesService);
-    storage = moduleFixture.get<UserNotesStorage>(UserNotesStorage);
+    storage = moduleFixture.get<BlobStorage>(BlobStorage);
     usersService = moduleFixture.get<UsersService>(UsersService);
     notesService = moduleFixture.get<NotesService>(NotesService);
   });

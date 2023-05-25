@@ -1,7 +1,7 @@
 import { BlobServiceClient, ContainerClient } from '@azure/storage-blob';
-import { IUserNotesStorage } from './interfaces/IUserNotesStorage';
+import { IBlobStorage } from './interfaces/IBlobStorage';
 
-export class UserNotesStorage implements IUserNotesStorage {
+export class BlobStorage implements IBlobStorage {
   private readonly containerClient: ContainerClient;
 
   constructor(connectionStr: string, containerName: string) {
