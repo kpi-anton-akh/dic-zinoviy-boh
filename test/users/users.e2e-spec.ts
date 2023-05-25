@@ -9,7 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { User } from 'src/modules/users/user.entity';
 import { CreateUserDto, UpdateUserDto } from 'src/modules/users/dtos/index';
 import { POSTGRES_CONNECTION_NAME } from '../../src/shared/constants/index';
-import { UserStatsPublisher } from 'src/shared/service-bus/UserStatsPublisher';
+import { UserStatsPublisher } from 'src/modules/user-stats/service-bus/UserStatsPublisher';
 import { UsersController } from 'src/modules/users/users.controller';
 import { UsersService } from 'src/modules/users/users.service';
 import { UsersRepository } from 'src/modules/users/users.repository';

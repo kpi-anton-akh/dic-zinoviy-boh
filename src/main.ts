@@ -4,7 +4,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger/dist';
-import { UserStatsSubscriber } from './shared/service-bus/UserStatsSubscriber';
+import { UserStatsSubscriber } from './modules/user-stats/service-bus/UserStatsSubscriber';
 import { UserStatsModule } from './modules/user-stats/user-stats.module';
 
 const configureEdgeService = async (app: INestApplication) => {

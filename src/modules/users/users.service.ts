@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { UsersRepository } from './users.repository';
-import { UserStatsPublisher } from '../../shared/service-bus/UserStatsPublisher';
+import { UserStatsPublisher } from '../user-stats/service-bus/UserStatsPublisher';
 
 @Injectable()
 export class UsersService {

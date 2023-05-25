@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserStatsService } from '../user-stats.service';
-import { UserStatsSubscriber } from '../../../shared/service-bus/UserStatsSubscriber';
+import { UserStatsSubscriber } from '../service-bus/UserStatsSubscriber';
 
 describe('UserStatsService', () => {
   let userStatsService: UserStatsService;

@@ -1,7 +1,7 @@
 import { ServiceBusClient } from '@azure/service-bus';
 import { Module } from '@nestjs/common';
-import { UserStatsPublisher } from 'src/shared/service-bus/UserStatsPublisher';
-import { UserStatsSubscriber } from 'src/shared/service-bus/UserStatsSubscriber';
+import { UserStatsPublisher } from 'src/modules/user-stats/service-bus/UserStatsPublisher';
+import { UserStatsSubscriber } from 'src/modules/user-stats/service-bus/UserStatsSubscriber';
 import { UserStatsService } from './user-stats.service';
 import { UserStatsController } from './user-stats.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';

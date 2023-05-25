@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { ServiceBusClient } from '@azure/service-bus';
 import { UserStatsService } from 'src/modules/user-stats/user-stats.service';
-import { UserStatsSubscriber } from 'src/shared/service-bus/UserStatsSubscriber';
+import { UserStatsSubscriber } from 'src/modules/user-stats/service-bus/UserStatsSubscriber';
 import { UserStatsController } from 'src/modules/user-stats/user-stats.controller';
 
 describe('UserStats', () => {
