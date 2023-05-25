@@ -4,10 +4,12 @@ import { UsersService } from '../users.service';
 import { UsersRepository } from '../users.repository';
 import { User } from '../user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos';
+import { UserStatsPublisher } from '../../../shared/service-bus/UserStatsPublisher';
 
 describe('UsersService', () => {
   let usersService: UsersService;
   let usersRepository: UsersRepository;
+  let userStatsPublisher: UserStatsPublisher;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -24,11 +26,18 @@ describe('UsersService', () => {
             getByEmail: jest.fn(),
           },
         },
+        {
+          provide: UserStatsPublisher,
+          useValue: {
+            publish: jest.fn(),
+          },
+        },
       ],
     }).compile();
 
     usersService = module.get<UsersService>(UsersService);
     usersRepository = module.get<UsersRepository>(UsersRepository);
+    userStatsPublisher = module.get<UserStatsPublisher>(UserStatsPublisher);
   });
 
   afterEach(() => {

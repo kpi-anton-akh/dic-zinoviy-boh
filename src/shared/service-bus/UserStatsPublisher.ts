@@ -18,7 +18,9 @@ export class UserStatsPublisher implements IPublisher {
     this.publisher = this.serviceBusClient.createSender(queueName);
   }
 
-  async publish(message: ServiceBusMessage): Promise<void> {
-    await this.publisher.sendMessages(message);
+  async publish<T extends { toString: () => string }>(
+    message: T,
+  ): Promise<void> {
+    await this.publisher.sendMessages({ body: message.toString() });
   }
 }

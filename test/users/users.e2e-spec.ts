@@ -6,15 +6,23 @@ import { INestApplication } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { UsersModule } from 'src/modules/users/users.module';
 import { User } from 'src/modules/users/user.entity';
 import { CreateUserDto, UpdateUserDto } from 'src/modules/users/dtos/index';
 import { POSTGRES_CONNECTION_NAME } from '../../src/shared/constants/index';
+import { UserStatsPublisher } from 'src/shared/service-bus/UserStatsPublisher';
+import { UsersController } from 'src/modules/users/users.controller';
+import { UsersService } from 'src/modules/users/users.service';
+import { UsersRepository } from 'src/modules/users/users.repository';
 
 describe('Users', () => {
   let app: INestApplication;
   let dataSource: DataSource;
   let db: Repository<User>;
+  let userStatsPublisher: UserStatsPublisher;
+
+  const mockUserStatsPublisher: jest.Mocked<Partial<UserStatsPublisher>> = {
+    publish: jest.fn(),
+  };
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -34,17 +42,27 @@ describe('Users', () => {
             return dataSource;
           },
         }),
-        UsersModule,
+        TypeOrmModule.forFeature([User], POSTGRES_CONNECTION_NAME),
       ],
+      providers: [
+        UsersService,
+        UsersRepository,
+        { provide: UserStatsPublisher, useValue: mockUserStatsPublisher },
+      ],
+      controllers: [UsersController],
     }).compile();
 
     app = moduleFixture.createNestApplication();
     db = dataSource.getRepository(User);
+    userStatsPublisher =
+      moduleFixture.get<UserStatsPublisher>(UserStatsPublisher);
 
     await app.init();
   });
 
   beforeEach(async () => {
+    jest.restoreAllMocks();
+
     await db.insert([
       {
         id: 1,

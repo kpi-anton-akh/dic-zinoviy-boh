@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { UsersRepository } from './users.repository';
-import { UserStatsPublisher } from 'src/shared/service-bus/UserStatsPublisher';
+import { UserStatsPublisher } from '../../shared/service-bus/UserStatsPublisher';
 
 @Injectable()
 export class UsersService {
@@ -28,7 +28,7 @@ export class UsersService {
 
     const createdUser = await this.usersRepository.create(user);
 
-    await this.userStatsPublisher.publish({ body: createdUser.id.toString() });
+    await this.userStatsPublisher.publish(createdUser.id);
 
     return createdUser;
   }
