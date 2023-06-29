@@ -4,6 +4,7 @@ import { PostgresDatabaseModule } from './databases/postgres-database.module';
 import { MongodbDatabaseModule } from './databases/mongodb-database.module';
 import { UsersModule } from './modules/users/users.module';
 import { NotesModule } from './modules/notes/notes.module';
+import { UserNotesModule } from './modules/user-notes/user-notes.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { NotesModule } from './modules/notes/notes.module';
     PostgresDatabaseModule,
     UsersModule,
     NotesModule,
+    UserNotesModule,
   ],
 })
 export class AppModule {}
