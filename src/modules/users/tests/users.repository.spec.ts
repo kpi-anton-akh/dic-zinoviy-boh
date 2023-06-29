@@ -2,19 +2,20 @@ import { TestingModule, Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UsersRepository } from '../users.repository';
-import { UserEntity } from '../users.entity';
+import { User } from '../user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos';
+import { POSTGRES_CONNECTION_NAME } from '../../../shared/constants/index';
 
 describe('UsersRepository', () => {
   let usersRepository: UsersRepository;
-  let userRepository: Repository<UserEntity>;
+  let userRepository: Repository<User>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersRepository,
         {
-          provide: getRepositoryToken(UserEntity),
+          provide: getRepositoryToken(User, POSTGRES_CONNECTION_NAME),
           useValue: {
             get: jest.fn(),
             find: jest.fn(),
@@ -29,8 +30,8 @@ describe('UsersRepository', () => {
     }).compile();
 
     usersRepository = module.get<UsersRepository>(UsersRepository);
-    userRepository = module.get<Repository<UserEntity>>(
-      getRepositoryToken(UserEntity),
+    userRepository = module.get<Repository<User>>(
+      getRepositoryToken(User, POSTGRES_CONNECTION_NAME),
     );
   });
 
@@ -43,7 +44,7 @@ describe('UsersRepository', () => {
     name: 'Test User 1',
     email: 'frank@example.com',
     password: 'testpassword',
-  } as UserEntity;
+  } as User;
 
   describe('Method create', () => {
     it('should create a new user with the given data', async () => {
@@ -56,7 +57,7 @@ describe('UsersRepository', () => {
       const savedUser = {
         ...mockUser,
         ...createUserDto,
-      } as UserEntity;
+      } as User;
 
       jest.spyOn(userRepository, 'create').mockReturnValueOnce(mockUser);
       jest.spyOn(userRepository, 'save').mockResolvedValueOnce(savedUser);
@@ -71,7 +72,7 @@ describe('UsersRepository', () => {
 
   describe('Method getAll', () => {
     it('should return an array of users', async () => {
-      const mockUsers: UserEntity[] = [
+      const mockUsers: User[] = [
         {
           id: 1,
           name: 'Test User 1',
@@ -116,7 +117,7 @@ describe('UsersRepository', () => {
       const updatedUser = {
         ...mockUser,
         ...updateUserDto,
-      } as UserEntity;
+      } as User;
 
       jest.spyOn(userRepository, 'update').mockResolvedValueOnce(undefined);
       jest

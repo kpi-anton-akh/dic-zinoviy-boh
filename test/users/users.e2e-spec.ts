@@ -7,22 +7,28 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from 'src/modules/users/users.module';
-import { UserEntity } from 'src/modules/users/users.entity';
+import { User } from 'src/modules/users/user.entity';
 import { CreateUserDto, UpdateUserDto } from 'src/modules/users/dtos/index';
+import { POSTGRES_CONNECTION_NAME } from '../../src/shared/constants/index';
 
 describe('Users', () => {
   let app: INestApplication;
   let dataSource: DataSource;
-  let db: Repository<UserEntity>;
+  let db: Repository<User>;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot({ isGlobal: true }),
         TypeOrmModule.forRootAsync({
+          name: POSTGRES_CONNECTION_NAME,
           imports: [SharedModule],
           inject: [ApiConfigService],
-          useFactory: ({ sqliteConfig }) => sqliteConfig,
+          useFactory: (configService: ApiConfigService) => ({
+            ...configService.sqliteConfig,
+            name: POSTGRES_CONNECTION_NAME,
+            entities: [User],
+          }),
           dataSourceFactory: async (options) => {
             dataSource = await new DataSource(options).initialize();
             return dataSource;
@@ -33,7 +39,7 @@ describe('Users', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    db = dataSource.getRepository(UserEntity);
+    db = dataSource.getRepository(User);
 
     await app.init();
   });

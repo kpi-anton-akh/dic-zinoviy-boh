@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 import { ConflictException } from '@nestjs/common';
 import { UsersController } from '../users.controller';
 import { CreateUserDto, UpdateUserDto } from '../dtos';
-import { UserEntity } from '../users.entity';
+import { User } from '../user.entity';
 import { UsersService } from '../users.service';
 
 describe('UsersController', () => {
@@ -34,7 +34,7 @@ describe('UsersController', () => {
     jest.resetAllMocks();
   });
 
-  const mockUser: UserEntity = {
+  const mockUser: User = {
     id: 1,
     name: 'Test User',
     email: 'test@example.com',
@@ -78,7 +78,7 @@ describe('UsersController', () => {
 
   describe('Method getAll', () => {
     it('should return an array of users', async () => {
-      const mockUsers: UserEntity[] = [
+      const mockUsers: User[] = [
         {
           id: 1,
           name: 'Test User 1',

@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { UsersService } from './users.service';
-import { UserEntity } from './users.entity';
+import { User } from './user.entity';
 import { ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 import { CreateUserDto, UpdateUserDto } from './dtos';
 
@@ -18,33 +18,33 @@ import { CreateUserDto, UpdateUserDto } from './dtos';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @ApiResponse({ status: 200, type: [UserEntity] })
+  @ApiResponse({ status: 200, type: [User] })
   @Get()
-  async getAll(): Promise<UserEntity[]> {
+  async getAll(): Promise<User[]> {
     return this.usersService.getAll();
   }
 
-  @ApiResponse({ status: 200, type: UserEntity })
+  @ApiResponse({ status: 200, type: User })
   @Get(':id')
-  async get(@Param('id') id: number): Promise<UserEntity> {
+  async get(@Param('id') id: number): Promise<User> {
     return this.usersService.get(id);
   }
 
-  @ApiResponse({ status: 201, type: UserEntity })
+  @ApiResponse({ status: 201, type: User })
   @Post()
-  async create(@Body() user: CreateUserDto): Promise<UserEntity> {
-    const userToCreate = plainToClass(UserEntity, user);
+  async create(@Body() user: CreateUserDto): Promise<User> {
+    const userToCreate = plainToClass(User, user);
 
     return this.usersService.create(userToCreate);
   }
 
-  @ApiResponse({ status: 200, type: UserEntity })
+  @ApiResponse({ status: 200, type: User })
   @Put(':id')
   async update(
     @Param('id') id: number,
     @Body() user: UpdateUserDto,
-  ): Promise<UserEntity> {
-    const userToUpdate = plainToClass(UserEntity, user);
+  ): Promise<User> {
+    const userToUpdate = plainToClass(User, user);
 
     return this.usersService.update(id, userToUpdate);
   }

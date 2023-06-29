@@ -1,10 +1,10 @@
-import { UserEntity } from '../users.entity';
+import { User } from '../user.entity';
 
 export interface IUsersRepository {
-  getAll(): Promise<UserEntity[]>;
-  get(id: number): Promise<UserEntity>;
-  create(user: Partial<UserEntity>): Promise<UserEntity>;
-  update(id: number, user: Partial<UserEntity>): Promise<UserEntity>;
+  getAll(): Promise<User[]>;
+  get(id: number): Promise<User>;
+  create(user: Partial<User>): Promise<User>;
+  update(id: number, user: Partial<User>): Promise<User>;
   delete(id: number): Promise<void>;
-  getByEmail(name: string): Promise<UserEntity>;
+  getByEmail(name: string): Promise<User>;
 }

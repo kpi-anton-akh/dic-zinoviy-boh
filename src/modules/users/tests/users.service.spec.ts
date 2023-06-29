@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConflictException } from '@nestjs/common';
 import { UsersService } from '../users.service';
 import { UsersRepository } from '../users.repository';
-import { UserEntity } from '../users.entity';
+import { User } from '../user.entity';
 import { CreateUserDto, UpdateUserDto } from '../dtos';
 
 describe('UsersService', () => {
@@ -35,7 +35,7 @@ describe('UsersService', () => {
     jest.resetAllMocks();
   });
 
-  const mockUser: UserEntity = {
+  const mockUser: User = {
     id: 1,
     name: 'Test User',
     email: 'test@example.com',
@@ -81,7 +81,7 @@ describe('UsersService', () => {
 
   describe('Method getAll', () => {
     it('should return an array of users', async () => {
-      const mockUsers: UserEntity[] = [
+      const mockUsers: User[] = [
         {
           id: 1,
           name: 'Test User 1',
